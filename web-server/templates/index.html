@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        background: white;
+        color: black;
+      }
+      div.upload {
+        max-width: 90vw;
+        max-height: 90vh;
+        margin: 5vh auto;
+        border: 1vh solid gray;
+        padding: 5vh;
+        text-align: center;
+      }
+      h4 {
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="upload">
+      <h4>Upload image:</h4>
+      
+      <form action = "http://localhost:5000/uploader" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>
+
+    </div>
+  </body>
+</html>
