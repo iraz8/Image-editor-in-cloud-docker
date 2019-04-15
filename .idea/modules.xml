@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ClientSimulation/ClientSimulation.iml" filepath="$PROJECT_DIR$/ClientSimulation/ClientSimulation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" filepath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/main-server/main-server.iml" filepath="$PROJECT_DIR$/main-server/main-server.iml" />
+    </modules>
+  </component>
+</project>
