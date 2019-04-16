@@ -1,22 +1,21 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
-public class MainServer {
+class MainServer {
 
-    public static final int FIXEDPORT = 20000;
-    public static final int NUM_THREADS = 10;
+    private static final int FIXEDPORT = 20000;
+    private static final int NUM_THREADS = 5;
     final static String FIXEDHOSTNAME = "localhost";
 
     /**
      * Constructor
      */
-    public MainServer(int port, int numThreads) {
-        ServerSocket serverSocket;
+    private MainServer(int port, int numThreads) {
+        ServerSocket mainServerSocket;
 
         try {
-            serverSocket = new ServerSocket(port);
+            mainServerSocket = new ServerSocket(port);
 
         } catch (IOException e) {
             /* Crash the server if IO fails. Something bad has happened */
@@ -25,7 +24,7 @@ public class MainServer {
 
         // Create a series of threads and start them.
         for (int i = 0; i < numThreads; i++) {
-            new Handler(serverSocket, i).start();
+            new Handler(mainServerSocket, i).start();
         }
     }
 
@@ -47,12 +46,12 @@ public class MainServer {
 class Handler extends Thread {
     public static final int FIXEDPORT = 20000;
     public static final int NUM_THREADS = 10;
-    final static String FIXEDHOSTNAME = "localhost";
-    final static int GaussianFilterServerPort = 20001;
+    private final static String FIXEDHOSTNAME = "localhost";
+    private final static int GaussianFilterServerPort = 20001;
+    private Socket specializedServerSocket;
 
-
-    ServerSocket serverSocket;
-    int threadNumber;
+    private ServerSocket mainServerSocket;
+    private int threadNumber;
 
     /**
      * Parameters
@@ -63,7 +62,7 @@ class Handler extends Thread {
      * Construct a Handler.
      */
     Handler(ServerSocket s, int i) {
-        serverSocket = s;
+        mainServerSocket = s;
         threadNumber = i;
         setName("Thread " + threadNumber);
     }
@@ -75,16 +74,16 @@ class Handler extends Thread {
         try {
             System.out.println(getName() + " waiting");
 
-            Socket clientSocket;
+            Socket inSocket;
             // Wait here for the next connection.
-            synchronized (serverSocket) {
-                clientSocket = serverSocket.accept();
+            synchronized (mainServerSocket) {
+                inSocket = mainServerSocket.accept();
             }
 
-            decisionMaker(clientSocket);
+            decisionMaker(inSocket);
 
-            if (!clientSocket.isClosed()) {
-                clientSocket.close();
+            if (!inSocket.isClosed()) {
+                inSocket.close();
             }
 
             System.out.println(getName() + " Closed ");
@@ -95,50 +94,61 @@ class Handler extends Thread {
 
     }
 
-    void closeConnection(Socket clientSocket) {
-        String clientInetAddress = clientSocket.getInetAddress().toString();
+    private void closeConnection(Socket inSocket) {
+        String clientInetAddress = inSocket.getInetAddress().toString();
         try {
-            clientSocket.close();
+            inSocket.close();
         } catch (IOException e) {
-            System.err.println("ERROR! method void closeConnection(Socket clientSocket)");
+            System.err.println("ERROR! method void closeConnection(Socket inSocket)");
             e.printStackTrace();
         }
 
-        if (clientSocket.isClosed())
+        if (inSocket.isClosed())
             System.out.println("Connection closed! The socket with IP " + clientInetAddress + " is closed!");
         else
-            System.err.println("ERROR! method void closeConnection(Socket clientSocket). Connection with " + clientInetAddress + "is still open!");
+            System.err.println("ERROR! method void closeConnection(Socket inSocket). Connection with " + clientInetAddress + "is still open!");
+    }
+
+    /**
+     * Hold one conversation across the net
+     */
+    private void initialize(String hostName, int port) {
+        try {
+            specializedServerSocket = new Socket(hostName, port); // echo server
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
-    String getCommandFromMsg(String msg) {
+    private String getCommandFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[0].toUpperCase();
     }
 
-    String getParameterFromMsg(String msg) {
+    private String getParameterFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[1];
     }
 
-    String getPathFromMsg(String msg) {
+    private String getPathFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[2];
     }
 
-    String getMsgFromClient(BufferedReader is) throws IOException {
+    private String getMsgFromClient(BufferedReader is) throws IOException {
         return is.readLine();
     }
 
-    void sendMessage(String msg, PrintWriter os) {
+    private void sendMessage(String msg, PrintWriter os) {
         os.print(msg + "\r\n");
         os.flush();
     }
 
-    void decisionMaker(Socket clientSocket) throws IOException {
-        BufferedReader is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        //  PrintWriter os = new PrintWriter(clientSocket.getOutputStream(), true);
-        System.out.println(getName() + " starting, IP=" + clientSocket.getInetAddress());
+    private void decisionMaker(Socket inSocket) throws IOException {
+        BufferedReader is = new BufferedReader(new InputStreamReader(inSocket.getInputStream()));
+        System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
 
         String msgToSend = getMsgFromClient(is);
         //  String msgToSend = "GAUSSIAN-FILTER 45 ..\\common-files\\test.jpg";
@@ -149,6 +159,17 @@ class Handler extends Thread {
         //DEBUG
         System.out.println(msgToSend);
 
+        PrintWriter os;
+
+        switch (command) {
+            case "GAUSSIAN-FILTER": {
+                initialize(FIXEDHOSTNAME, GaussianFilterServerPort);
+            }
+        }
+
+        os = new PrintWriter(specializedServerSocket.getOutputStream(), true);
+
+        sendMessage(msgToSend, os);
 /*
         Socket specializedServer;
 
@@ -161,13 +182,13 @@ class Handler extends Thread {
 
                 break;
             case "CLOSE":
-                closeConnection(clientSocket);
+                closeConnection(inSocket);
                 break;
             default:
                 System.err.println("ERROR! Method: int decisionMaker(String line)! Unknown command! Command:" + command);
                 break;
         }*/
-        closeConnection(clientSocket);
+        closeConnection(inSocket);
 
     }
 }

@@ -3,10 +3,10 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class ClientSimulation {
+class ClientSimulation {
 
-    final static int FIXEDPORT = 20000;
-    final static String FIXEDHOSTNAME = "localhost";
+    private final static int FIXEDPORT = 20000;
+    private final static String FIXEDHOSTNAME = "localhost";
 
     public static void main(String[] argv) {
         if (argv.length == 0)
@@ -18,7 +18,7 @@ public class ClientSimulation {
     /**
      * Hold one conversation across the net
      */
-    protected void initialize(String hostName) {
+    private void initialize(String hostName) {
         try {
             Socket serverSocket = new Socket(hostName, FIXEDPORT); // echo server
 
@@ -26,11 +26,9 @@ public class ClientSimulation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
-    void sendMessageToServer(String msg, PrintWriter os) {
+    private void sendMessageToServer(String msg, PrintWriter os) {
         os.print(msg + "\r\n");
         os.flush();
     }
@@ -46,7 +44,7 @@ public class ClientSimulation {
         return parameters;
     }
 
-    void closeConnection(Socket serverSocket) {
+    private void closeConnection(Socket serverSocket) {
         String serverInetAddress = serverSocket.getInetAddress().toString();
         try {
             serverSocket.close();
@@ -72,7 +70,7 @@ public class ClientSimulation {
     }
 
 
-    void decisionMaker(Socket serverSocket) throws IOException {
+    private void decisionMaker(Socket serverSocket) throws IOException {
         PrintWriter os = new PrintWriter(serverSocket.getOutputStream(), true);
         //   String path = "C:\\Workspace\\Licenta\\Images\\elephant.jpg";
 

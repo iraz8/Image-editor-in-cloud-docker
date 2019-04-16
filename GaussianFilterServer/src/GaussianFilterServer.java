@@ -1,120 +1,171 @@
-package GaussianFilterServer;
-
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Scanner;
 
-public class Client {
 
-    final static int FIXEDPORT = 20001;
+class GaussianFilterServer {
+
+    private static final int FIXEDPORT = 20001;
+    private static final int NUM_THREADS = 3;
     final static String FIXEDHOSTNAME = "localhost";
 
-    public static void main(String[] argv) {
-        if (argv.length == 0)
-            new Client().initialize(FIXEDHOSTNAME);
-        else
-            new Client().initialize(argv[0]);
+    /**
+     * Constructor
+     */
+    private GaussianFilterServer(int port, int numThreads) {
+        ServerSocket serverSocket;
+
+        try {
+            serverSocket = new ServerSocket(port);
+
+        } catch (IOException e) {
+            /* Crash the server if IO fails. Something bad has happened */
+            throw new RuntimeException("Could not create ServerSocket ", e);
+        }
+
+        // Create a series of threads and start them.
+        for (int i = 0; i < numThreads; i++) {
+            new Handler(serverSocket, i).start();
+        }
     }
+
 
     /**
-     * Hold one conversation across the net
+     * Main method, to start the servers.
      */
-    protected void initialize(String hostName) {
-        try {
-            Socket serverSocket = new Socket(hostName, FIXEDPORT); // echo server
+    public static void main(String[] av) {
+        new GaussianFilterServer(FIXEDPORT, NUM_THREADS);
 
-            decisionMaker(serverSocket);
+    }
+}
+
+/**
+ * A Thread subclass to handle one client conversation.
+ */
+class Handler extends Thread {
+    public static final int FIXEDPORT = 20000;
+    public static final int NUM_THREADS = 10;
+    final static String FIXEDHOSTNAME = "localhost";
+    final static int GaussianFilterServerPort = 20001;
+
+
+    private ServerSocket serverSocket;
+    private int threadNumber;
+
+    /**
+     * Parameters
+     */
+    String serverFilesPath = "Server Files";
+
+    /**
+     * Construct a Handler.
+     */
+    Handler(ServerSocket s, int i) {
+        serverSocket = s;
+        threadNumber = i;
+        setName("Thread " + threadNumber);
+    }
+
+    public void run() {
+        /* Wait for a connection. Synchronized on the ServerSocket
+         * while calling its accept() method.
+         */
+        try {
+            System.out.println(getName() + " waiting");
+
+            Socket inSocket;
+            // Wait here for the next connection.
+            synchronized (serverSocket) {
+                inSocket = serverSocket.accept();
+            }
+
+            decisionMaker(inSocket);
+
+            if (!inSocket.isClosed()) {
+                inSocket.close();
+            }
+
+            System.out.println(getName() + " Closed ");
+
+        } catch (IOException ex) {
+            System.out.println(getName() + ": IO Error on socket " + ex);
+        }
+
+    }
+
+    private void closeConnection(Socket inSocket) {
+        String clientInetAddress = inSocket.getInetAddress().toString();
+        try {
+            inSocket.close();
         } catch (IOException e) {
+            System.err.println("ERROR! method void closeConnection(Socket inSocket)");
             e.printStackTrace();
         }
 
-
-    }
-
-    void sendMessageToServer(String msg, PrintWriter os) {
-        os.print(msg + "\r\n");
-        os.flush();
-    }
-
-    String getCommandFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        return msgSplited[0];
-    }
-
-    String[] getParametersFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        String[] parameters = Arrays.copyOfRange(msgSplited, 1, msgSplited.length);
-        return parameters;
-    }
-
-    void closeConnection(Socket serverSocket) {
-        String serverInetAddress = serverSocket.getInetAddress().toString();
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            System.err.println("ERROR! method void closeConnection(Socket serverSocket)");
-            e.printStackTrace();
-        }
-
-        if (serverSocket.isClosed())
-            System.out.println("Connection closed! The socket with IP " + serverInetAddress + " is closed!");
+        if (inSocket.isClosed())
+            System.out.println("Connection closed! The socket with IP " + clientInetAddress + " is closed!");
         else
-            System.err.println("ERROR! method void closeConnection(Socket clientSocket). Connection with " + serverInetAddress + "is still open!");
+            System.err.println("ERROR! method void closeConnection(Socket inSocket). Connection with " + clientInetAddress + "is still open!");
     }
 
-    Socket openNewSocketToServer() {
-        Socket serverSocket = null;
-        try {
-            serverSocket = new Socket(FIXEDHOSTNAME, FIXEDPORT + 1); // echo server
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return serverSocket;
+
+    private String getCommandFromMsg(String msg) {
+        String[] msgSplited = msg.split(" ");
+        return msgSplited[0].toUpperCase();
     }
 
-    String getParameterFromMsg(String msg) {
+    private String getParameterFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[1];
     }
 
-    String getPathFromMsg(String msg) {
+    private String getPathFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[2];
     }
 
-    void decisionMaker(Socket serverSocket) throws IOException {
-        PrintWriter os = new PrintWriter(serverSocket.getOutputStream(), true);
-        //   String path = "C:\\Workspace\\Licenta\\Images\\elephant.jpg";
-        while (!serverSocket.isClosed()) {
-            String msgFromServer = getInput();
-
-            //DEBUG
-            System.out.println(msgToSend);
-
-            sendMessageToServer(msgToSend, os);
-
-            String command = getCommandFromMsg(msgFromServer);
-            String parameter = getParameterFromMsg(msgFromServer);
-            String path = getPathFromMsg(msgFromServer);
-
-            switch (command) {
-                case "SEND":
-                    sendFileToServer(parameters[0]);
-                    break;
-                case "CLOSE":
-                    closeConnection(serverSocket);
-                    break;
-                default:
-                    System.err.println("ERROR! Method: int decisionMaker(String line)! Unknown command! Command:" + command);
-                    break;
-            }
-
-        }
+    private String getMsgFromClient(BufferedReader is) throws IOException {
+        return is.readLine();
     }
 
-    String getInput() {
-        return (new Scanner(System.in)).nextLine().toUpperCase();
+    void sendMessage(String msg, PrintWriter os) {
+        os.print(msg + "\r\n");
+        os.flush();
     }
 
+    private void decisionMaker(Socket inSocket) throws IOException {
+        BufferedReader is = new BufferedReader(new InputStreamReader(inSocket.getInputStream()));
+        //  PrintWriter os = new PrintWriter(inSocket.getOutputStream(), true);
+        System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
+
+        String msgToSend = getMsgFromClient(is);
+        //  String msgToSend = "GAUSSIAN-FILTER 45 ..\\common-files\\test.jpg";
+        String command = getCommandFromMsg(msgToSend);
+        String parameter = getParameterFromMsg(msgToSend);
+        String path = getPathFromMsg(msgToSend);
+
+        //DEBUG
+        System.out.println(msgToSend);
+
+/*
+        Socket specializedServer;
+
+        switch(command) {
+            case "GAUSSIAN-FILTER":
+                specializedServer = "localhost" + GaussianFilterServerPort;
+
+        switch (command) {
+            case "GAUSSIAN-FILTER":
+
+                break;
+            case "CLOSE":
+                closeConnection(inSocket);
+                break;
+            default:
+                System.err.println("ERROR! Method: int decisionMaker(String line)! Unknown command! Command:" + command);
+                break;
+        }*/
+        closeConnection(inSocket);
+
+    }
 }
