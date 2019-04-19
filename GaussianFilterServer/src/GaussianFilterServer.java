@@ -4,8 +4,7 @@ import java.net.Socket;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
@@ -189,7 +188,7 @@ class GaussianFilter {
 
             } else {
                 if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
-                    f = new File( "usr/lib/libopencv_java401.so");
+                    f = new File( "/usr/lib/libopencv_java401.so");
                }
                /*     if (System.getProperty("sun.arch.data.model").equals("32")) {
                         // 32-bit JVM

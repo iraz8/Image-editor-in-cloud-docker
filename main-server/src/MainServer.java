@@ -4,9 +4,9 @@ import java.net.Socket;
 
 class MainServer {
 
+    final static String FIXEDHOSTNAME = "localhost";
     private static final int FIXEDPORT = 20000;
     private static final int NUM_THREADS = 5;
-    final static String FIXEDHOSTNAME = "localhost";
 
     /**
      * Constructor
@@ -48,15 +48,13 @@ class Handler extends Thread {
     public static final int NUM_THREADS = 10;
     private final static String FIXEDHOSTNAME = "localhost";
     private final static int GaussianFilterServerPort = 20001;
-    private Socket specializedServerSocket;
-
-    private ServerSocket mainServerSocket;
-    private int threadNumber;
-
     /**
      * Parameters
      */
     String serverFilesPath = "Server Files";
+    private Socket specializedServerSocket;
+    private ServerSocket mainServerSocket;
+    private int threadNumber;
 
     /**
      * Construct a Handler.

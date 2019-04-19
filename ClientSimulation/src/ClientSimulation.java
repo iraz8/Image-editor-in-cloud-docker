@@ -76,7 +76,8 @@ class ClientSimulation {
 
 
         // String msgToSend = getInput();
-        String msgToSend = "GAUSSIAN-FILTER C:\\test.jpg 50";
+        final String currentPath = new File("").getAbsolutePath();
+        String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 50";
 
         //DEBUG
         System.out.println(msgToSend);
