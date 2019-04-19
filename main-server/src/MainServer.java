@@ -168,24 +168,6 @@ class Handler extends Thread {
         os = new PrintWriter(specializedServerSocket.getOutputStream(), true);
 
         sendMessage(msgToSend, os);
-/*
-        Socket specializedServer;
-
-        switch(command) {
-            case "GAUSSIAN-FILTER":
-                specializedServer = "localhost" + GaussianFilterServerPort;
-
-        switch (command) {
-            case "GAUSSIAN-FILTER":
-
-                break;
-            case "CLOSE":
-                closeConnection(inSocket);
-                break;
-            default:
-                System.err.println("ERROR! Method: int decisionMaker(String line)! Unknown command! Command:" + command);
-                break;
-        }*/
         closeConnection(inSocket);
 
     }

@@ -3,6 +3,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 
 import org.opencv.core.Mat;
@@ -21,10 +22,10 @@ class GaussianFilterServer {
      * Constructor
      */
     private GaussianFilterServer(int port, int numThreads) {
-        ServerSocket serverSocket;
+        ServerSocket specializedServerSocket;
 
         try {
-            serverSocket = new ServerSocket(port);
+            specializedServerSocket = new ServerSocket(port);
 
         } catch (IOException e) {
             /* Crash the server if IO fails. Something bad has happened */
@@ -33,7 +34,7 @@ class GaussianFilterServer {
 
         // Create a series of threads and start them.
         for (int i = 0; i < numThreads; i++) {
-            new Handler(serverSocket, i).start();
+            new Handler(specializedServerSocket, i).start();
         }
     }
 
@@ -57,7 +58,7 @@ class Handler extends Thread {
     final static int GaussianFilterServerPort = 20001;
     static final Path currentPath = FileSystems.getDefault().getPath(".");
 
-    private ServerSocket serverSocket;
+    private ServerSocket specializedServerSocket;
     private int threadNumber;
 
     /**
@@ -69,7 +70,7 @@ class Handler extends Thread {
      * Construct a Handler.
      */
     Handler(ServerSocket s, int i) {
-        serverSocket = s;
+        specializedServerSocket = s;
         threadNumber = i;
         setName("Thread " + threadNumber);
     }
@@ -83,8 +84,8 @@ class Handler extends Thread {
 
             Socket inSocket;
             // Wait here for the next connection.
-            synchronized (serverSocket) {
-                inSocket = serverSocket.accept();
+            synchronized (specializedServerSocket) {
+                inSocket = specializedServerSocket.accept();
             }
 
             decisionMaker(inSocket);
@@ -122,17 +123,19 @@ class Handler extends Thread {
         return msgSplited[0].toUpperCase();
     }
 
-    private String getParameterFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        return msgSplited[2];
-    }
-
     private String getPathFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         return msgSplited[1];
     }
 
-    private String getMsgFromClient(BufferedReader is) throws IOException {
+    private String[] getParametersFromMsg(String msg) {
+        String[] msgSplited = msg.split(" ");
+        String[] parameters = Arrays.copyOfRange(msgSplited,2,msgSplited.length);
+        System.out.println("AAAAAAAAA " + parameters[0] + " " + parameters[1] + " " + parameters[2]);
+        return parameters;
+    }
+
+    private String getMsgFromMainServer(BufferedReader is) throws IOException {
         return is.readLine();
     }
 
@@ -146,17 +149,16 @@ class Handler extends Thread {
         //  PrintWriter os = new PrintWriter(inSocket.getOutputStream(), true);
         System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
 
-        String msgToSend = getMsgFromClient(is);
-        //  String msgToSend = "GAUSSIAN-FILTER 45 ..\\common-files\\test.jpg";
-        String command = getCommandFromMsg(msgToSend);
-        String parameter = getParameterFromMsg(msgToSend);
-        String path = getPathFromMsg(msgToSend);
+        String msgReceived = getMsgFromMainServer(is);
+        String command = getCommandFromMsg(msgReceived);
+        String[] parameters = getParametersFromMsg(msgReceived);
+        String path = getPathFromMsg(msgReceived);
 
         //DEBUG
-        System.out.println(msgToSend);
+        System.out.println(msgReceived);
 
         GaussianFilter filter = new GaussianFilter();
-        filter.apply(path,parameter);
+        filter.apply(path,parameters);
 
         closeConnection(inSocket);
 
@@ -169,7 +171,7 @@ class GaussianFilter {
         File f = new File(path);
         return f.getName();
     }
-    void apply(String path,String parameters){
+    void apply(String path,String[] parameters){
 
         try {
 
@@ -190,24 +192,14 @@ class GaussianFilter {
                 if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
                     f = new File( "/usr/lib/libopencv_java401.so");
                }
-               /*     if (System.getProperty("sun.arch.data.model").equals("32")) {
-                        // 32-bit JVM
-                        f = new File(currentPath + "Libs\\x86\\opencv_java410.dll");
-                    } else {
-                        // 64-bit JVM
-                        f = new File(currentPath + "Libs\\x64\\opencv_java410.dll");
-                    }
-                }*/
             }
 
             System.load(f.getAbsolutePath());
-            Mat source = Imgcodecs.imread(path,
-                    Imgcodecs.IMREAD_COLOR);
+            Mat source = Imgcodecs.imread(path, Imgcodecs.IMREAD_COLOR);
 
             Mat destination = new Mat(source.rows(), source.cols(), source.type());
-            Imgproc.GaussianBlur(source, destination, new Size(45, 45), 0);
-            System.out.println(currentPath + "/Images/[Processed]" +  getFilename(path));
-            Imgcodecs.imwrite(currentPath + "/Images/[Processed]" +  getFilename(path), destination);
+            Imgproc.GaussianBlur(source, destination, new Size(Double.valueOf(parameters[0]), Double.valueOf(parameters[1])), Double.valueOf(parameters[2]));
+            Imgcodecs.imwrite(currentPath + "/Images/[Processed-GaussianFilter]" +  getFilename(path), destination);
 
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());
