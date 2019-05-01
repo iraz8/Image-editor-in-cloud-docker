@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -77,8 +79,9 @@ class ClientSimulation {
 
         // String msgToSend = getInput();
         final String currentPath = new File("").getAbsolutePath();
-        String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 45 45 60";
-
+        //   String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 45 45 60";
+        //  String msgToSend = "IMAGE-SHAPE-CONVERSION " + currentPath + "/Images/test.jpg 45 45 60";
+        String msgToSend = "ZOOM " + currentPath + "/Images/test.jpg 2";
         //DEBUG
         System.out.println(msgToSend);
 

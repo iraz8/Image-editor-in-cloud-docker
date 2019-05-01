@@ -1,8 +1,10 @@
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,16 +12,16 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-class GaussianFilterServer {
+class ImageShapeConversionServer {
 
-    private static final int FIXEDPORT = 20001;
-    private static final int NUM_THREADS = 3;
     final static String FIXEDHOSTNAME = "localhost";
+    private static final int FIXEDPORT = 20002;
+    private static final int NUM_THREADS = 3;
 
     /**
      * Constructor
      */
-    private GaussianFilterServer(int port, int numThreads) {
+    private ImageShapeConversionServer(int port, int numThreads) {
         ServerSocket specializedServerSocket;
 
         try {
@@ -41,7 +43,7 @@ class GaussianFilterServer {
      * Main method, to start the servers.
      */
     public static void main(String[] av) {
-        new GaussianFilterServer(FIXEDPORT, NUM_THREADS);
+        new ImageShapeConversionServer(FIXEDPORT, NUM_THREADS);
 
     }
 }
@@ -55,14 +57,12 @@ class Handler extends Thread {
     final static String FIXEDHOSTNAME = "localhost";
     final static int GaussianFilterServerPort = 20001;
     static final Path currentPath = FileSystems.getDefault().getPath(".");
-
-    private ServerSocket specializedServerSocket;
-    private int threadNumber;
-
     /**
      * Parameters
      */
     String serverFilesPath = "Server Files";
+    private ServerSocket specializedServerSocket;
+    private int threadNumber;
 
     /**
      * Construct a Handler.
@@ -128,8 +128,7 @@ class Handler extends Thread {
 
     private String[] getParametersFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
-        String[] parameters = Arrays.copyOfRange(msgSplited,2,msgSplited.length);
-        System.out.println("AAAAAAAAA " + parameters[0] + " " + parameters[1] + " " + parameters[2]);
+        String[] parameters = Arrays.copyOfRange(msgSplited, 2, msgSplited.length);
         return parameters;
     }
 
@@ -155,23 +154,23 @@ class Handler extends Thread {
         //DEBUG
         System.out.println(msgReceived);
 
-        GaussianFilter filter = new GaussianFilter();
-        filter.apply(path,parameters);
+        ImageShapeConversion filter = new ImageShapeConversion();
+        filter.apply(path, parameters);
 
         closeConnection(inSocket);
 
     }
 }
 
-class GaussianFilter {
+class ImageShapeConversion {
     static final String currentPath = new File("").getAbsolutePath();
 
-    String getFilename (String path) {
+    String getFilename(String path) {
         File f = new File(path);
         return f.getName();
     }
 
-    void apply(String path, String[] parameters){
+    void apply(String path, String[] parameters) {
 
         try {
 
@@ -181,7 +180,7 @@ class GaussianFilter {
             if (OS.contains("win")) {
                 if (System.getProperty("sun.arch.data.model").equals("32")) {
                     // 32-bit JVM
-                    f = new File(currentPath +  "/Libs/x86/opencv_java410.dll");
+                    f = new File(currentPath + "/Libs/x86/opencv_java410.dll");
                 } else {
                     // 64-bit JVM
                     f = new File(currentPath + "/Libs/x64/opencv_java410.dll");
@@ -194,11 +193,24 @@ class GaussianFilter {
             }
 
             System.load(f.getAbsolutePath());
-            Mat source = Imgcodecs.imread(path, Imgcodecs.IMREAD_COLOR);
+            File input = new File(path);
+            BufferedImage image = ImageIO.read(input);
 
-            Mat destination = new Mat(source.rows(), source.cols(), source.type());
-            Imgproc.GaussianBlur(source, destination, new Size(Double.valueOf(parameters[0]), Double.valueOf(parameters[1])), Double.valueOf(parameters[2]));
-            Imgcodecs.imwrite(currentPath + "/Images/[Processed-GaussianFilter]" +  getFilename(path), destination);
+            byte[] data = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+            Mat mat = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
+            mat.put(0, 0, data);
+
+            Mat mat1 = new Mat(image.getHeight(), image.getWidth(), CvType.CV_8UC3);
+            Core.flip(mat, mat1, -1);
+
+            byte[] data1 = new byte[mat1.rows() * mat1.cols() * (int) (mat1.elemSize())];
+            mat1.get(0, 0, data1);
+            BufferedImage image1 = new BufferedImage(mat1.cols(), mat1.rows(), 5);
+            image1.getRaster().setDataElements(0, 0, mat1.cols(), mat1.rows(), data1);
+
+            File ouptut = new File(currentPath + "/Images/[Processed-ImageShapeConversion]" + getFilename(path));
+            ImageIO.write(image1, "jpg", ouptut);
+
 
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());

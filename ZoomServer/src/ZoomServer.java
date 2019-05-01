@@ -1,5 +1,4 @@
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -10,16 +9,16 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-class GaussianFilterServer {
+class ZoomServer {
 
-    private static final int FIXEDPORT = 20001;
-    private static final int NUM_THREADS = 3;
     final static String FIXEDHOSTNAME = "localhost";
+    private static final int FIXEDPORT = 20003;
+    private static final int NUM_THREADS = 3;
 
     /**
      * Constructor
      */
-    private GaussianFilterServer(int port, int numThreads) {
+    private ZoomServer(int port, int numThreads) {
         ServerSocket specializedServerSocket;
 
         try {
@@ -41,7 +40,7 @@ class GaussianFilterServer {
      * Main method, to start the servers.
      */
     public static void main(String[] av) {
-        new GaussianFilterServer(FIXEDPORT, NUM_THREADS);
+        new ZoomServer(FIXEDPORT, NUM_THREADS);
 
     }
 }
@@ -55,14 +54,12 @@ class Handler extends Thread {
     final static String FIXEDHOSTNAME = "localhost";
     final static int GaussianFilterServerPort = 20001;
     static final Path currentPath = FileSystems.getDefault().getPath(".");
-
-    private ServerSocket specializedServerSocket;
-    private int threadNumber;
-
     /**
      * Parameters
      */
     String serverFilesPath = "Server Files";
+    private ServerSocket specializedServerSocket;
+    private int threadNumber;
 
     /**
      * Construct a Handler.
@@ -128,8 +125,7 @@ class Handler extends Thread {
 
     private String[] getParametersFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
-        String[] parameters = Arrays.copyOfRange(msgSplited,2,msgSplited.length);
-        System.out.println("AAAAAAAAA " + parameters[0] + " " + parameters[1] + " " + parameters[2]);
+        String[] parameters = Arrays.copyOfRange(msgSplited, 2, msgSplited.length);
         return parameters;
     }
 
@@ -156,7 +152,7 @@ class Handler extends Thread {
         System.out.println(msgReceived);
 
         GaussianFilter filter = new GaussianFilter();
-        filter.apply(path,parameters);
+        filter.apply(path, parameters);
 
         closeConnection(inSocket);
 
@@ -166,12 +162,12 @@ class Handler extends Thread {
 class GaussianFilter {
     static final String currentPath = new File("").getAbsolutePath();
 
-    String getFilename (String path) {
+    String getFilename(String path) {
         File f = new File(path);
         return f.getName();
     }
 
-    void apply(String path, String[] parameters){
+    void apply(String path, String[] parameters) {
 
         try {
 
@@ -181,7 +177,7 @@ class GaussianFilter {
             if (OS.contains("win")) {
                 if (System.getProperty("sun.arch.data.model").equals("32")) {
                     // 32-bit JVM
-                    f = new File(currentPath +  "/Libs/x86/opencv_java410.dll");
+                    f = new File(currentPath + "/Libs/x86/opencv_java410.dll");
                 } else {
                     // 64-bit JVM
                     f = new File(currentPath + "/Libs/x64/opencv_java410.dll");
@@ -193,12 +189,13 @@ class GaussianFilter {
                 }
             }
 
+            int zoomingFactor = Integer.parseInt(parameters[0]);
             System.load(f.getAbsolutePath());
             Mat source = Imgcodecs.imread(path, Imgcodecs.IMREAD_COLOR);
 
-            Mat destination = new Mat(source.rows(), source.cols(), source.type());
-            Imgproc.GaussianBlur(source, destination, new Size(Double.valueOf(parameters[0]), Double.valueOf(parameters[1])), Double.valueOf(parameters[2]));
-            Imgcodecs.imwrite(currentPath + "/Images/[Processed-GaussianFilter]" +  getFilename(path), destination);
+            Mat destination = new Mat(source.rows() * zoomingFactor, source.cols() * zoomingFactor, source.type());
+            Imgproc.resize(source, destination, destination.size(), zoomingFactor, zoomingFactor, Imgproc.INTER_NEAREST);
+            Imgcodecs.imwrite(currentPath + "/Images/[Processed-Zoom]" + getFilename(path), destination);
 
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());

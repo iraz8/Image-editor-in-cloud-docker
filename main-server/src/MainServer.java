@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -48,6 +51,8 @@ class Handler extends Thread {
     public static final int NUM_THREADS = 10;
     private final static String FIXEDHOSTNAME = "localhost";
     private final static int GaussianFilterServerPort = 20001;
+    private final static int ImageShapeConversionServerPort = 20002;
+    private final static int ZoomServerPort = 20003;
     /**
      * Parameters
      */
@@ -162,6 +167,12 @@ class Handler extends Thread {
         switch (command) {
             case "GAUSSIAN-FILTER": {
                 initialize(FIXEDHOSTNAME, GaussianFilterServerPort);
+            }
+            case "IMAGE-SHAPE-CONVERSION": {
+                initialize(FIXEDHOSTNAME, ImageShapeConversionServerPort);
+            }
+            case "ZOOM": {
+                initialize(FIXEDHOSTNAME, ZoomServerPort);
             }
         }
 

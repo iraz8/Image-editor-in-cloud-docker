@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ClientSimulation/ClientSimulation.iml" filepath="$PROJECT_DIR$/ClientSimulation/ClientSimulation.iml" />
       <module fileurl="file://$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" filepath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.iml" filepath="$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZoomServer/ZoomServer.iml" filepath="$PROJECT_DIR$/ZoomServer/ZoomServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/main-server/main-server.iml" filepath="$PROJECT_DIR$/main-server/main-server.iml" />
     </modules>
   </component>
