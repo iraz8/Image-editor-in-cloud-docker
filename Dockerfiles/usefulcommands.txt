@@ -1,0 +1,4 @@
+	#RUN apt-get install -y libopencv3.2-java
+    #COPY . /home/
+    #RUN java -jar /home/main-server.jar
+    #systemctl start docker
