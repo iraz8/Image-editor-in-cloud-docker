@@ -61,16 +61,6 @@ class ClientSimulation {
             System.err.println("ERROR! method void closeConnection(Socket clientSocket). Connection with " + serverInetAddress + "is still open!");
     }
 
-    Socket openNewSocketToServer() {
-        Socket serverSocket = null;
-        try {
-            serverSocket = new Socket(FIXEDHOSTNAME, FIXEDPORT + 1); // echo server
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return serverSocket;
-    }
-
 
     private void decisionMaker(Socket serverSocket) throws IOException {
         PrintWriter os = new PrintWriter(serverSocket.getOutputStream(), true);

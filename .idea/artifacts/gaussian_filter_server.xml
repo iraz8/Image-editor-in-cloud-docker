@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="gaussian_filter_server">
+    <output-path>$PROJECT_DIR$/GaussianFilterServer</output-path>
+    <root id="archive" name="gaussian_filter_server.jar">
+      <element id="module-output" name="GaussianFilterServer" />
+    </root>
+  </artifact>
+</component>

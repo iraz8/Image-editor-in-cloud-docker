@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="zoom-server">
+    <output-path>$PROJECT_DIR$/ZoomServer</output-path>
+    <root id="archive" name="zoom-server.jar">
+      <element id="module-output" name="ZoomServer" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/ZoomServer/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
