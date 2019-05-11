@@ -8,8 +8,8 @@ import java.util.Scanner;
 class ClientSimulation {
 
     private final static int FIXEDPORT = 20000;
+    //   private final static String FIXEDHOSTNAME = "local_network_main_server";
     private final static String FIXEDHOSTNAME = "localhost";
-
     public static void main(String[] argv) {
         if (argv.length == 0)
             new ClientSimulation().initialize(FIXEDHOSTNAME);
@@ -69,15 +69,17 @@ class ClientSimulation {
 
         // String msgToSend = getInput();
         final String currentPath = new File("").getAbsolutePath();
-        //   String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 45 45 60";
+        String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 45 45 60";
         //  String msgToSend = "IMAGE-SHAPE-CONVERSION " + currentPath + "/Images/test.jpg 45 45 60";
-        String msgToSend = "ZOOM " + currentPath + "/Images/test.jpg 2";
+        // String msgToSend = "ZOOM " + currentPath + "/Images/test.jpg 2";
+        //   String msgToSend = "GAUSSIAN-FILTER " + "/home/Workspace/Image-editor-in-cloud-docker/Images/test.jpg 35 45 30";
         //DEBUG
         System.out.println(msgToSend);
 
         sendMessageToServer(msgToSend, os);
 
-
+        //DEBUG
+        System.out.println("2 : " + msgToSend);
         closeConnection(serverSocket);
     }
 

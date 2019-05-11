@@ -7,7 +7,7 @@ import java.net.Socket;
 
 class MainServer {
 
-    final static String FIXEDHOSTNAME = "localhost";
+    final static String FIXEDHOSTNAME = "local_network";
     private static final int FIXEDPORT = 20000;
     private static final int NUM_THREADS = 5;
 
@@ -49,7 +49,7 @@ class MainServer {
 class Handler extends Thread {
     public static final int FIXEDPORT = 20000;
     public static final int NUM_THREADS = 10;
-    private final static String FIXEDHOSTNAME = "localhost";
+    private final static String FIXEDHOSTNAME = "local_network";
     private final static int GaussianFilterServerPort = 20001;
     private final static int ImageShapeConversionServerPort = 20002;
     private final static int ZoomServerPort = 20003;
@@ -163,17 +163,18 @@ class Handler extends Thread {
         System.out.println(msgToSend);
 
         PrintWriter os;
-
+        Process p = Runtime.getRuntime().exec("touch /home/Images/ab");
         switch (command) {
             case "GAUSSIAN-FILTER": {
-                initialize(FIXEDHOSTNAME, GaussianFilterServerPort);
+                initialize("localhost", GaussianFilterServerPort);
+                //          initialize("local_network_gaussian_filter_server", GaussianFilterServerPort);
             }
-            case "IMAGE-SHAPE-CONVERSION": {
+       /*     case "IMAGE-SHAPE-CONVERSION": {
                 initialize(FIXEDHOSTNAME, ImageShapeConversionServerPort);
             }
             case "ZOOM": {
                 initialize(FIXEDHOSTNAME, ZoomServerPort);
-            }
+            }*/
         }
 
         os = new PrintWriter(specializedServerSocket.getOutputStream(), true);

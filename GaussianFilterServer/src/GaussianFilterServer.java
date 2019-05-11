@@ -10,6 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Arrays;
 
+
 class GaussianFilterServer {
 
     private static final int FIXEDPORT = 20001;
@@ -51,8 +52,8 @@ class GaussianFilterServer {
  */
 class Handler extends Thread {
     public static final int FIXEDPORT = 20000;
-    public static final int NUM_THREADS = 10;
-    final static String FIXEDHOSTNAME = "localhost";
+    public static final int NUM_THREADS = 5;
+    final static String FIXEDHOSTNAME = "local_network";
     final static int GaussianFilterServerPort = 20001;
     static final Path currentPath = FileSystems.getDefault().getPath(".");
 
@@ -85,9 +86,9 @@ class Handler extends Thread {
             synchronized (specializedServerSocket) {
                 inSocket = specializedServerSocket.accept();
             }
-
+            Process d = Runtime.getRuntime().exec("touch /home/Images/connected");
             decisionMaker(inSocket);
-
+            Process e = Runtime.getRuntime().exec("touch /home/Images/connected2");
             if (!inSocket.isClosed()) {
                 inSocket.close();
             }
@@ -129,7 +130,6 @@ class Handler extends Thread {
     private String[] getParametersFromMsg(String msg) {
         String[] msgSplited = msg.split(" ");
         String[] parameters = Arrays.copyOfRange(msgSplited,2,msgSplited.length);
-        System.out.println("AAAAAAAAA " + parameters[0] + " " + parameters[1] + " " + parameters[2]);
         return parameters;
     }
 
@@ -143,7 +143,9 @@ class Handler extends Thread {
     }
 
     private void decisionMaker(Socket inSocket) throws IOException {
+        Process c = Runtime.getRuntime().exec("touch /home/Images/abcde");
         BufferedReader is = new BufferedReader(new InputStreamReader(inSocket.getInputStream()));
+
         //  PrintWriter os = new PrintWriter(inSocket.getOutputStream(), true);
         System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
 
@@ -151,9 +153,9 @@ class Handler extends Thread {
         String command = getCommandFromMsg(msgReceived);
         String[] parameters = getParametersFromMsg(msgReceived);
         String path = getPathFromMsg(msgReceived);
-
         //DEBUG
         System.out.println(msgReceived);
+
 
         GaussianFilter filter = new GaussianFilter();
         filter.apply(path,parameters);
@@ -176,6 +178,7 @@ class GaussianFilter {
         try {
 
             File f = null;
+            //  File f2 = null;
             String OS = System.getProperty("os.name").toLowerCase();
 
             if (OS.contains("win")) {
@@ -189,16 +192,30 @@ class GaussianFilter {
 
             } else {
                 if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
-                    f = new File("/usr/lib/libopencv_java410.so");
+                    //   f = new File("/usr/lib/libopencv_java410.so");
+                    f = new File("/home/razvan/Workspace/Image-editor-in-cloud-docker/Libs/opencv4/libopencv_java410.so");
+                    //         f2 = new File("/usr/lib/libopencv_imgcodecs.so");
                 }
             }
+            Process d = Runtime.getRuntime().exec("touch /home/Images/abcdefgh1");
+            if (f != null) {
+                System.load(f.getAbsolutePath());
+                //      System.load(f2.getAbsolutePath());
 
-            System.load(f.getAbsolutePath());
+
+                System.out.println(f.getAbsolutePath());
+                //    System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
+            } else
+                System.out.println("ERROR! System.load(f.getAbsolutePath());");
+            Process e = Runtime.getRuntime().exec("touch /home/Images/abcdefgh2");
+            //  Mat source = Imgcodecs.imread(path,Imgcodecs.IMREAD_COLOR);
             Mat source = Imgcodecs.imread(path, Imgcodecs.IMREAD_COLOR);
-
+            Process h = Runtime.getRuntime().exec("touch /home/Images/abcdefgh3");
             Mat destination = new Mat(source.rows(), source.cols(), source.type());
+            Process g = Runtime.getRuntime().exec("touch /home/Images/abcdefgh4");
             Imgproc.GaussianBlur(source, destination, new Size(Double.valueOf(parameters[0]), Double.valueOf(parameters[1])), Double.valueOf(parameters[2]));
-            Imgcodecs.imwrite(currentPath + "/Images/[Processed-GaussianFilter]" +  getFilename(path), destination);
+            Imgcodecs.imwrite(currentPath + "/Images/[Processed-GaussianFilter]" + getFilename(path), destination);
+            //   Imgcodecs.imwrite("/home/Images/[Processed-GaussianFilter]" +  getFilename(path), destination);
 
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());

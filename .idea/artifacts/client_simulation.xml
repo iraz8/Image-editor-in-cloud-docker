@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="client-simulation">
+    <output-path>$PROJECT_DIR$/ClientSimulation</output-path>
+    <root id="archive" name="client-simulation.jar">
+      <element id="module-output" name="ClientSimulation" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/ClientSimulation/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

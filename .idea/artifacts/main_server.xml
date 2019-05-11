@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/main-server/</output-path>
     <root id="archive" name="main-server.jar">
       <element id="module-output" name="main-server" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/main-server/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>

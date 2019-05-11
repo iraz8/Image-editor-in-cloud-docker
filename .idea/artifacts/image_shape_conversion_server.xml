@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/ImageShapeConversionServer/</output-path>
     <root id="archive" name="ImageShapeConversionServer.jar">
       <element id="module-output" name="ImageShapeConversionServer" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/ImageShapeConversionServer/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>
