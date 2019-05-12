@@ -1,4 +1,4 @@
-FROM iraz/archlinux-jdk11-base:intellij-idea
+FROM iraz/archlinux-jdk11-base
 ENV HOST_HOSTNAME local_network
 EXPOSE 20000
 COPY ClientSimulation.jar /home/

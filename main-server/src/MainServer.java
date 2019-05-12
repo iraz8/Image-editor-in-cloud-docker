@@ -123,16 +123,6 @@ class Handler extends Thread {
         return msgSplited[0].toUpperCase();
     }
 
-    private String getParameterFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        return msgSplited[1];
-    }
-
-    private String getPathFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        return msgSplited[2];
-    }
-
     private String getMsgFromClient(BufferedReader is) throws IOException {
         return is.readLine();
     }

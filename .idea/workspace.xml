@@ -11,31 +11,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcefc84e-d913-44c7-88e1-9c9445cb4725" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/client_simulation_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/gaussian_filter_server_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/main_server_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/client_simulation.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/gaussian_filter_server.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/image_shape_conversion_server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/ImageShapeConversionServer_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/main_server.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/zoom_server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/ZoomServer_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/opencv_410.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/opencv_410.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClientSimulation/ClientSimulation.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSimulation/ClientSimulation.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientSimulation/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSimulation/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClientSimulation/client-simulation.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GaussianFilterServer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/GaussianFilterServer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GaussianFilterServer/gaussian-filter-server.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ImageShapeConversionServer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ImageShapeConversionServer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/GaussianFilterServer/GaussianFilterServer.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ImageShapeConversionServer/ImageShapeConversionServer.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ImageShapeConversionServer/src/ImageShapeConversionServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ImageShapeConversionServer/src/ImageShapeConversionServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZoomServer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ZoomServer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZoomServer/ZoomServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ZoomServer/ZoomServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZoomServer/src/ZoomServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ZoomServer/src/ZoomServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZoomServer/zoom-server.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZoomServer/ZoomServer.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ZoomServer/ZoomServer.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleanDocker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/cleanDocker.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/main-server/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main-server/main-server.jar" beforeDir="false" afterPath="$PROJECT_DIR$/main-server/main-server.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main-server/src/MainServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/main-server/src/MainServer.java" afterDir="false" />
@@ -56,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main-server/src/MainServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="157" selection-start-line="157" selection-end-line="157" />
+            <state relative-caret-position="738">
+              <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -68,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2850">
-              <caret line="190" selection-start-line="190" selection-end-line="190" />
+            <state relative-caret-position="393">
+              <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,19 +61,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="69" selection-start-line="69" selection-end-line="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZoomServer/src/ZoomServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="588">
-              <caret line="178" selection-start-line="178" selection-end-line="178" />
+              <caret line="179" selection-start-line="179" selection-end-line="179" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -102,10 +76,19 @@
         <entry file="file://$PROJECT_DIR$/ImageShapeConversionServer/src/ImageShapeConversionServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="648">
-              <caret line="197" selection-start-line="197" selection-end-line="197" />
+              <caret line="198" selection-start-line="198" selection-end-line="198" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="573">
+              <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -140,9 +123,9 @@
         <option value="$PROJECT_DIR$/Dockerfiles/usefulcommands.txt" />
         <option value="$PROJECT_DIR$/ZoomServer/src/ZoomServer.java" />
         <option value="$PROJECT_DIR$/ImageShapeConversionServer/src/ImageShapeConversionServer.java" />
-        <option value="$PROJECT_DIR$/main-server/src/MainServer.java" />
         <option value="$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java" />
         <option value="$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java" />
+        <option value="$PROJECT_DIR$/main-server/src/MainServer.java" />
       </list>
     </option>
   </component>
@@ -156,9 +139,43 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/Workspace/Image-editor-in-cloud-docker" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/Workspace/Image-editor-in-cloud-docker" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Dockerfiles" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="ClientSimulation" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="main-server" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="main-server" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Image-editor-in-cloud-docker" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="main-server" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="MainServer.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -281,7 +298,11 @@
       <workItem from="1557391715929" duration="10224000" />
       <workItem from="1557565711523" duration="8782000" />
       <workItem from="1557592310188" duration="4053000" />
-      <workItem from="1557651392316" duration="366000" />
+      <workItem from="1557651392316" duration="633000" />
+      <workItem from="1557652053013" duration="25000" />
+      <workItem from="1557652199460" duration="133000" />
+      <workItem from="1557652597524" duration="615000" />
+      <workItem from="1557655613943" duration="155000" />
     </task>
     <task id="LOCAL-00001" summary="V4&#10;Finished ImageShapeConversionServer and ZoomServer. Working">
       <created>1556729919850</created>
@@ -325,17 +346,31 @@
       <option name="project" value="LOCAL" />
       <updated>1557568329147</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="V5 Final">
+      <created>1557651856673</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1557651856673</updated>
+    </task>
+    <task id="LOCAL-00008" summary="V5,1 Final">
+      <created>1557652001369</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1557652001369</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48862000" />
+    <option name="totallyTimeSpent" value="50057000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="0" width="1688" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15853658" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16585366" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -418,7 +453,9 @@
     <MESSAGE value="Revert &quot;Revert &quot;V4,5 Added base's dockerfile, usefulcommands.txt and Images folder&quot;&quot;&#10;&#10;This reverts commit a3e91718" />
     <MESSAGE value="V4,6 Files cleaned" />
     <MESSAGE value="V4,7 Temp commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="V4,7 Temp commit" />
+    <MESSAGE value="V5 Final" />
+    <MESSAGE value="V5,1 Final" />
+    <option name="LAST_COMMIT_MESSAGE" value="V5,1 Final" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -457,10 +494,27 @@
     <entry file="file://$PROJECT_DIR$/createDockerNetwork.sh">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ImageShapeConversionServer/src/ImageShapeConversionServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
-          <caret line="197" selection-start-line="197" selection-end-line="197" />
+          <caret line="198" selection-start-line="198" selection-end-line="198" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -470,24 +524,7 @@
     <entry file="file://$PROJECT_DIR$/ZoomServer/src/ZoomServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="588">
-          <caret line="178" selection-start-line="178" selection-end-line="178" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClientSimulation/src/ClientSimulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GaussianFilterServer/src/GaussianFilterServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2850">
-          <caret line="190" selection-start-line="190" selection-end-line="190" />
+          <caret line="179" selection-start-line="179" selection-end-line="179" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -496,8 +533,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main-server/src/MainServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="157" selection-start-line="157" selection-end-line="157" />
+        <state relative-caret-position="738">
+          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -54,9 +54,9 @@ class ClientSimulation {
 
         final String currentPath = new File("").getAbsolutePath();
 
-        // String msgToSend = "GAUSSIAN-FILTER " + "/home/Images/test.jpg 45 45 60";
+        String msgToSend = "GAUSSIAN-FILTER " + "/home/Images/test.jpg 45 45 60";
         // String msgToSend = "IMAGE-SHAPE-CONVERSION " + "/home/Images/test.jpg 45 45 60";
-        String msgToSend = "ZOOM " + "/home/Images/test.jpg 2";
+        // String msgToSend = "ZOOM " + "/home/Images/test.jpg 2";
 
         //DEBUG
         System.out.println(msgToSend);
