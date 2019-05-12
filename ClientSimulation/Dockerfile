@@ -1,4 +1,5 @@
-FROM iraz/manjaro-jdk11-opencv4-base
+FROM iraz/archlinux-jdk11-base:intellij-idea
 ENV HOST_HOSTNAME local_network
 EXPOSE 20000
-COPY client-simulation.jar /home/
+COPY ClientSimulation.jar /home/
+RUN chmod 7777 /home/ClientSimulation.jar

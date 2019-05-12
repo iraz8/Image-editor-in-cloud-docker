@@ -1,6 +1,5 @@
-FROM iraz/manjaro-jdk11-opencv4-base
+FROM iraz/archlinux-jdk11-base:opencv
 ENV HOST_HOSTNAME local_network
 EXPOSE 20001
-COPY META-INF/ /home/META-INF/
-COPY gaussian-filter-server.jar /home/
+COPY GaussianFilterServer.jar /home/
 RUN chmod -R 7777 /home/

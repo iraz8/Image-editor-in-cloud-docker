@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ImageShapeConversionServer:jar">
+    <output-path>$PROJECT_DIR$/ImageShapeConversionServer</output-path>
+    <root id="archive" name="ImageShapeConversionServer.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/ImageShapeConversionServer/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="ImageShapeConversionServer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libs/opencv4/opencv-410.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

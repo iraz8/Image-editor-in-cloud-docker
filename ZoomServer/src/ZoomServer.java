@@ -2,16 +2,16 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.Arrays;
 
 class ZoomServer {
 
-    final static String FIXEDHOSTNAME = "localhost";
     private static final int FIXEDPORT = 20003;
     private static final int NUM_THREADS = 3;
 
@@ -49,15 +49,10 @@ class ZoomServer {
  * A Thread subclass to handle one client conversation.
  */
 class Handler extends Thread {
-    public static final int FIXEDPORT = 20000;
-    public static final int NUM_THREADS = 10;
-    final static String FIXEDHOSTNAME = "localhost";
-    final static int GaussianFilterServerPort = 20001;
-    static final Path currentPath = FileSystems.getDefault().getPath(".");
+
     /**
      * Parameters
      */
-    String serverFilesPath = "Server Files";
     private ServerSocket specializedServerSocket;
     private int threadNumber;
 
@@ -133,18 +128,11 @@ class Handler extends Thread {
         return is.readLine();
     }
 
-    void sendMessage(String msg, PrintWriter os) {
-        os.print(msg + "\r\n");
-        os.flush();
-    }
-
     private void decisionMaker(Socket inSocket) throws IOException {
         BufferedReader is = new BufferedReader(new InputStreamReader(inSocket.getInputStream()));
-        //  PrintWriter os = new PrintWriter(inSocket.getOutputStream(), true);
         System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
 
         String msgReceived = getMsgFromMainServer(is);
-        String command = getCommandFromMsg(msgReceived);
         String[] parameters = getParametersFromMsg(msgReceived);
         String path = getPathFromMsg(msgReceived);
 
@@ -188,14 +176,13 @@ class GaussianFilter {
                     f = new File("/usr/lib/libopencv_java410.so");
                 }
             }
-
             int zoomingFactor = Integer.parseInt(parameters[0]);
             System.load(f.getAbsolutePath());
             Mat source = Imgcodecs.imread(path, Imgcodecs.IMREAD_COLOR);
 
             Mat destination = new Mat(source.rows() * zoomingFactor, source.cols() * zoomingFactor, source.type());
             Imgproc.resize(source, destination, destination.size(), zoomingFactor, zoomingFactor, Imgproc.INTER_NEAREST);
-            Imgcodecs.imwrite(currentPath + "/Images/[Processed-Zoom]" + getFilename(path), destination);
+            Imgcodecs.imwrite("/home/Images/[Processed-Zoom]" + getFilename(path), destination);
 
         } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());

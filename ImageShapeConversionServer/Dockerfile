@@ -1,4 +1,5 @@
-FROM iraz/archlinux-jdk11-base:opencv4
-EXPOSE 20002:20002
-COPY image-shape-conversion-server.jar /home/
-RUN java -jar /home/image-shape-conversion-server.jar
+FROM iraz/archlinux-jdk11-base:opencv
+ENV HOST_HOSTNAME local_network
+EXPOSE 20002
+COPY ImageShapeConversionServer.jar /home/
+RUN chmod -R 7777 /home/

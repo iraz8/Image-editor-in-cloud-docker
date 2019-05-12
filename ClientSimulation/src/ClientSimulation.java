@@ -2,14 +2,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Scanner;
 
 class ClientSimulation {
 
     private final static int FIXEDPORT = 20000;
-    //   private final static String FIXEDHOSTNAME = "local_network_main_server";
-    private final static String FIXEDHOSTNAME = "localhost";
+    private final static String FIXEDHOSTNAME = "local_network_main_server";
+
     public static void main(String[] argv) {
         if (argv.length == 0)
             new ClientSimulation().initialize(FIXEDHOSTNAME);
@@ -35,17 +33,6 @@ class ClientSimulation {
         os.flush();
     }
 
-    String getCommandFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        return msgSplited[0];
-    }
-
-    String[] getParametersFromMsg(String msg) {
-        String[] msgSplited = msg.split(" ");
-        String[] parameters = Arrays.copyOfRange(msgSplited, 1, msgSplited.length);
-        return parameters;
-    }
-
     private void closeConnection(Socket serverSocket) {
         String serverInetAddress = serverSocket.getInetAddress().toString();
         try {
@@ -64,15 +51,13 @@ class ClientSimulation {
 
     private void decisionMaker(Socket serverSocket) throws IOException {
         PrintWriter os = new PrintWriter(serverSocket.getOutputStream(), true);
-        //   String path = "C:\\Workspace\\Licenta\\Images\\elephant.jpg";
 
-
-        // String msgToSend = getInput();
         final String currentPath = new File("").getAbsolutePath();
-        String msgToSend = "GAUSSIAN-FILTER " + currentPath + "/Images/test.jpg 45 45 60";
-        //  String msgToSend = "IMAGE-SHAPE-CONVERSION " + currentPath + "/Images/test.jpg 45 45 60";
-        // String msgToSend = "ZOOM " + currentPath + "/Images/test.jpg 2";
-        //   String msgToSend = "GAUSSIAN-FILTER " + "/home/Workspace/Image-editor-in-cloud-docker/Images/test.jpg 35 45 30";
+
+        // String msgToSend = "GAUSSIAN-FILTER " + "/home/Images/test.jpg 45 45 60";
+        // String msgToSend = "IMAGE-SHAPE-CONVERSION " + "/home/Images/test.jpg 45 45 60";
+        String msgToSend = "ZOOM " + "/home/Images/test.jpg 2";
+
         //DEBUG
         System.out.println(msgToSend);
 
@@ -82,9 +67,4 @@ class ClientSimulation {
         System.out.println("2 : " + msgToSend);
         closeConnection(serverSocket);
     }
-
-    String getInput() {
-        return (new Scanner(System.in)).nextLine().toUpperCase();
-    }
-
 }

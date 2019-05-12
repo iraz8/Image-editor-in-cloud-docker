@@ -1,4 +1,5 @@
-FROM iraz/archlinux-jdk11-base:opencv4
-EXPOSE 20003:20003
-COPY zoom-server.jar /home/
-RUN java -jar /home/zoom-server.jar
+FROM iraz/archlinux-jdk11-base:opencv
+ENV HOST_HOSTNAME local_network
+EXPOSE 20003
+COPY ZoomServer.jar /home/
+RUN chmod -R 7777 /home/

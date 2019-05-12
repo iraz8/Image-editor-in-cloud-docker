@@ -5,16 +5,16 @@ import org.opencv.core.Mat;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.Arrays;
 
 class ImageShapeConversionServer {
 
-    final static String FIXEDHOSTNAME = "localhost";
     private static final int FIXEDPORT = 20002;
     private static final int NUM_THREADS = 3;
 
@@ -52,15 +52,9 @@ class ImageShapeConversionServer {
  * A Thread subclass to handle one client conversation.
  */
 class Handler extends Thread {
-    public static final int FIXEDPORT = 20000;
-    public static final int NUM_THREADS = 10;
-    final static String FIXEDHOSTNAME = "localhost";
-    final static int GaussianFilterServerPort = 20001;
-    static final Path currentPath = FileSystems.getDefault().getPath(".");
     /**
      * Parameters
      */
-    String serverFilesPath = "Server Files";
     private ServerSocket specializedServerSocket;
     private int threadNumber;
 
@@ -136,18 +130,11 @@ class Handler extends Thread {
         return is.readLine();
     }
 
-    void sendMessage(String msg, PrintWriter os) {
-        os.print(msg + "\r\n");
-        os.flush();
-    }
-
     private void decisionMaker(Socket inSocket) throws IOException {
         BufferedReader is = new BufferedReader(new InputStreamReader(inSocket.getInputStream()));
-        //  PrintWriter os = new PrintWriter(inSocket.getOutputStream(), true);
         System.out.println(getName() + " starting, IP=" + inSocket.getInetAddress());
 
         String msgReceived = getMsgFromMainServer(is);
-        String command = getCommandFromMsg(msgReceived);
         String[] parameters = getParametersFromMsg(msgReceived);
         String path = getPathFromMsg(msgReceived);
 
@@ -208,8 +195,8 @@ class ImageShapeConversion {
             BufferedImage image1 = new BufferedImage(mat1.cols(), mat1.rows(), 5);
             image1.getRaster().setDataElements(0, 0, mat1.cols(), mat1.rows(), data1);
 
-            File ouptut = new File(currentPath + "/Images/[Processed-ImageShapeConversion]" + getFilename(path));
-            ImageIO.write(image1, "jpg", ouptut);
+            File output = new File("/home/Images/[Processed-ImageShapeConversion]" + getFilename(path));
+            ImageIO.write(image1, "jpg", output);
 
 
         } catch (Exception e) {
